@@ -1,20 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace BilletLib
 {
-    public class Bil : Base
+    class MC : Base
     {
         private string _nummerplade;
         private DateTime _dato;
         private bool _brobizz;
         private bool _øresund;
-        
+
         public string Nummerplade { get { return _nummerplade; } }
         public DateTime Dato { get { return _dato; } }
         public bool Brobizz { get { return _brobizz; } }
         public bool Øresund { get { return _øresund; } }
-
-        public Bil(string nummerplade, DateTime dato, bool brobizz, bool øresund)
+        
+        public MC(string nummerplade, DateTime dato, bool brobizz, bool øresund)
         {
             if (nummerplade.Length > 7)
             {
@@ -30,36 +32,32 @@ namespace BilletLib
         {
             if (_øresund == true)
             {
-                return "Øresund Bil";
+                return "Øresund MC";
             }
-            return "Bil";
+            return "MC";
         }
 
         public override int Pris()
         {
-
-            int result = 240;
-            int result2 = 410;
-
-            if (_dato.DayOfWeek == DayOfWeek.Saturday || _dato.DayOfWeek == DayOfWeek.Sunday)
-            {
-                result = (int)(result * 0.8);
-            }
+            int femprocentRabat = 5 * Convert.ToInt32(2.4);
+            int result = 125;
+            int result2 = 210;
 
             if (_brobizz == true)
             {
-                result = (int)(result * 0.95);
+                result = result - femprocentRabat;
             }
 
-            if (_øresund == true)
+            if (_øresund)
             {
                 result = result2;
             }
 
-            if (_øresund && _brobizz == true)
+            if (_øresund == true && _brobizz == true)
             {
-                result = 161;
+                result = 73;
             }
+
             return result;
         }
     }
